@@ -1,6 +1,8 @@
 import { FETCH_SWAPI, REQSUCCESS, REQFAILURE } from "../actions";
 const initialState = {
-  characters: []
+  characters: [],
+  fetching: false,
+  error: null
   // Array characters, Boolean fetching, null error.
 };
 export const charsReducer = (state = initialState, action) => {
@@ -9,11 +11,22 @@ export const charsReducer = (state = initialState, action) => {
     // action types should be FETCHING, SUCCESS and FAILURE
     // your switch statement should handle all of these cases.
     case FETCH_SWAPI:
-      return action.payload;
+      return {
+        ...state,
+        fetching: true
+      }
     case REQSUCCESS:
-      return console.log("succ");
+      return {
+        ...state,
+        characters: action.payload,
+        fetching: false
+      }
     case REQFAILURE:
-      return console.log('fail')
+      return {
+        ...state,
+        fetching: false,
+        error: action.payload
+      }
     default:
       return state;
   }
